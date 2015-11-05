@@ -4,6 +4,7 @@ class QuotesController < ApplicationController
   end
 
   def create
+    binding.pry
     @quote = Quote.create(quote_params)
     if @quote.invalid?
       flash[:error] = "<strong>Could not save</strong> the data you entered in invalid"
@@ -12,6 +13,13 @@ class QuotesController < ApplicationController
   end
 
   def about
+  end
+
+  def show
+    @quote = Quote.where(:id => params[:id]).first
+    if @quote.blank?
+      render :text => "Not Found", :status => :not_found
+    end
   end
 
   private
